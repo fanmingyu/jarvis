@@ -1,0 +1,55 @@
+{{template "header" .}}
+{{$data := .Info}}
+<section class="content-header"><h1>黑名单管理</h1></section>
+<section class="content">
+    <div class="searchbar clearfix">
+        <form class="form-inline pull-right" action="/blacklist/index">
+             <div class="form-group">
+                 <input type="text" class="form-control" placeholder="手机号" name="mobile" value="{{$data.mobile}}"/>
+                 <button type="submit" class="btn btn-default">搜索</button>
+                 <a href="/blacklist/add" class="btn btn-default">添加黑名单</a>
+             </div>
+        </form>
+    </div>
+    <div class="box box-primary">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th width="100">ID</th>
+                        <th width="200">手机号</th>
+                        <th width="250">添加时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range $blacklist := $data.data}}
+                    <tr>
+                        <td>{{$blacklist.id}}</td>
+                        <td>{{$blacklist.mobile}}</td>
+                        <td>{{$blacklist.createTime}}</td>
+                        <td>
+                            <a href="/blacklist/delete?id={{$blacklist.id}}" onclick="return confirm('确定要删除？');">删除</a>
+                        </td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        <div class="box-footer">
+            <ul class="pagination">
+                {{if $data.page}}
+                    <li class="paginate_button">
+                        <a href="/blacklist/index?page={{$data.previous}}&mobile={{$data.mobile}}">上一页</a>
+                    </li>
+                {{else}}
+                    <li class="disabled">
+                        <a href="#">上一页</a>
+                    </li>
+                {{end}}
+                <li class="paginate_button">
+                    <a href="/blacklist/index?page={{$data.next}}&mobile={{$data.mobile}}">下一页</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+{{template "footer" .}}

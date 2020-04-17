@@ -1,0 +1,45 @@
+{{template "header" .}}
+{{$apps := .Info}}
+<section class="content-header"><h1>应用管理</h1></section>
+<section class="content">
+
+<div class="searchbar clearfix">
+    <div class="pull-right">
+        <a href="/app/add" class="btn btn-default">添加应用</a>
+    </div>
+</div>
+
+<div class="box box-primary" style="overflow:auto;">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th width="150">应用名称</th>
+                <th width="120">签名</th>
+                <th width="220">通道</th>
+                <th width="220">Worker</th>
+                <th width="150">创建时间</th>
+                <th width="150">修改时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range $app := $apps}}
+            <tr>
+                <td>{{$app.name}}</td>
+                <td>{{$app.prefix}}</td>
+                <td>{{getChannelName $app.channel}} ({{$app.channel}})</td>
+                <td>{{getWorkerName $app.worker}} ({{$app.worker}})</td>
+                <td>{{$app.createTime}}</td>
+                <td>{{$app.updateTime}}</td>
+                <td>
+                    <a href="/app/update?id={{$app.id}}">修改</a>
+                    &nbsp;
+                    <a href="/app/delete?id={{$app.id}}" onclick="return confirm('确定要删除？');">删除</a>
+                </td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+</div>
+</section>
+{{template "footer" .}}

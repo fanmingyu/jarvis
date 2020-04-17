@@ -1,0 +1,64 @@
+{{template "header" .}}
+{{$data := .Info}}
+{{$tpls := $data.data}}
+<section class="content-header"><h1>模板管理</h1></section>
+<section class="content">
+<div class="searchbar clearfix">
+    <form action="/tpl/index" class="form-inline pull-right">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="模板名或内容" name="keyword" value="{{$data.keyword}}" style="width:350px;"/>
+            <button type="submit" class="btn btn-default">搜索</button>
+            <a href="/tpl/add" class="btn btn-default">添加模板</a>
+        </div>
+    </form>
+</div>
+<div class="box box-primary" style="overflow:auto;">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th width="60">ID</th>
+                    <th width="80">外部模板ID</th>
+                    <th width="100">模板名</th>
+                    <th>内容</th>
+                    <th width="150">创建时间</th>
+                    <th width="150">修改时间</th>
+                    <th width="180">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range $tpl := $tpls}}
+                <tr>
+                    <td>{{$tpl.id}}</td>
+                    <td>{{$tpl.out_id}}</td>
+                    <td>{{$tpl.name}}</td>
+                    <td>{{$tpl.content}}</td>
+                    <td>{{$tpl.createTime}}</td>
+                    <td>{{$tpl.updateTime | default "-"}}</td>
+                    <td>
+                        <a href="/tpl/update?id={{$tpl.id}}">修改</a>
+                        &nbsp;
+                        <a href="/tpl/delete?id={{$tpl.id}}" onclick="return confirm('确定要删除?');">删除</a>
+                    </td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    <div class="box-footer">
+        <ul class="pagination">
+            {{if $data.page}}
+            <li class="pagination_button">
+                <a href="/tpl/index?page={{$data.previous}}&tpl={{$data.tpl}}">上一页</a>
+            </li>
+            {{else}}
+            <li class="disabled">
+                <a href="#">上一页</a>
+            </li>
+            {{end}}
+            <li class="pagination_button">
+                <a href="/tpl/index?page={{$data.next}}&tpl={{$data.tpl}}">下一页</a>
+            </li>
+        </ul>
+    </div>
+</div>
+</section>
+{{template "footer" .}}

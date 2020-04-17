@@ -1,0 +1,77 @@
+{{template "header" .}}
+{{$data := .Info}}
+<section class="content-header"><h1>发送条数统计</h1></section>
+<section class="content">
+    <div class="searchbar clearfix">
+        <form action="/stat/number" class="form-inline pull-right">
+            <div class="form-group">
+                <input type="text" class="form-control datepicker" name="start" value="{{$data.start}}"/>
+                -
+                <input type="text" class="form-control datepicker" name="end" value="{{$data.end}}"/>
+                <button type="submit" class="btn btn-default">查询</button>
+            </div>
+        </form>
+    </div>
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <div class="box-title">发送条数占比</div>
+        </div>
+        <div class="box-body">
+            <div id="timeStat" style="height:300px;"></div>
+        </div>
+    </div>
+    <div class="box box-primary">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th width="130">发送条数</th>
+                    <th width="150">总计</th>
+                    <th width="150">占比</th>
+                    <th width="150">累计占比</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range $k, $v := $data.data}}
+                <tr>
+                    <td>{{index $data.numberRank $v.Title}}</td>
+                    <td><num>{{$v.Num}}</num></td>
+                    <td>{{calcPercent $v.Num $data.sum}}%</td>
+                    <td>{{calcPercent $v.Sum $data.sum}}%</td>
+                    <td></td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+</section>
+<script>
+$(function() {
+    $('#timeStat').highcharts({
+        title: false,
+        tooltip: {
+            pointFormat: '数值: {point.y} <br /> 占比: {point.percentage:.1f}%'
+        },
+        plotOptions: {
+            pie: {
+                dataLabels: {
+                    enable: true,
+                    color: '#000000',
+                    connectorColor: '#ddd',
+                    format: '{point.name}: {point.percentage:.1f}%',
+                }
+            }
+        },
+        colors: ['#5bc49f', '#32d3eb', '#60acfc', '#feb64d', '#ff7c7c', '#9287e7', '#4e59c0'],
+        credits: {
+            enabled:false
+        },
+        series: [{
+            type: 'pie',
+            name: '发送条数统计',
+            data: {{$data.pieData}}
+        }]
+    });
+});
+</script>
+{{template "footer" .}}

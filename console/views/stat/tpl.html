@@ -1,0 +1,43 @@
+{{template "header" .}}
+{{$data := .Info}}
+<section class="content-header"><h1>模板发送统计</h1></section>
+<section class="content">
+    <div class="searchbar clearfix">
+        <form action="/stat/tpl" class="form-inline pull-right">
+            <div class="form-group">
+                <input type="text" class="form-control datepicker" name="start" value="{{$data.start}}"/>
+                -
+                <input type="text" class="form-control datepicker" name="end" value="{{$data.end}}"/>
+            </div>
+            <button type="submit" class="btn btn-default">查询</button>
+        </form>
+    </div>
+    <div class="box box-primary">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th width="60">模板ID</th>
+                    <th width="120">发送次数</th>
+                    <th width="120">计费条数</th>
+                    <th width="120">平均条数</th>
+                    <th width="100">占比</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range $d := $data.data}}
+                <tr>
+                    <td><a href="/tpl/index?id={{$d.Tpl}}">{{$d.Tpl}}</a></td>
+                    <td><num>{{$d.Num}}</num></td>
+                    <td><num>{{$d.Sum}}</num></td>
+                    <td>{{$d.AvgNum}}</td>
+                    <td>{{calcPercent $d.Sum $data.sum}}%</td>
+                    <td></td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{{template "footer" .}}

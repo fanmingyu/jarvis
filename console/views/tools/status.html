@@ -1,0 +1,36 @@
+{{template "header" .}}
+{{$data := .Info}}
+<section class="content-header"><h1>状态码查询</h1></section>
+<section class="content">
+    <div class="searchbar clearfix">
+        <form action="/tools/status" class="form-inline pull-right">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="状态码" name="status" value="{{$data.status}}"/>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </div>
+        </form>
+    </div>
+    <div class="box box-primary">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th width="100">状态码</th>
+                        <th width="100">运营商</th>
+                        <th width="300">说明</th>
+                        <th>解决方案</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range $status := $data.data}}
+                    <tr>
+                        <td>{{$status.Status}}</td>
+                        <td>{{$status.Net}}</td>
+                        <td>{{$status.Info}}</td>
+                        <td class="text-danger">{{$status.Solution}}{{if not $status.Solution}}——{{end}}</td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+    </div>
+</section>
+{{template "footer" .}}

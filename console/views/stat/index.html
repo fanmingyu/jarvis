@@ -1,0 +1,129 @@
+{{template "header" .}}
+{{$data := .Info}}
+<section class="content-header">
+    <h1>短信网关控制台 <small>近1小时发送统计</small></h1>
+</section>
+<section class="content">
+    <div class="row">
+        <!--sum-->
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-aqua">
+              <div class="inner">
+                <h3><num>{{$data.sum}}</num></h3>
+                <p>发送总计</p>
+              </div>
+              <div class="icon"><i class="ion-stats-bars"></i></div>
+              <a href="/stat/daily" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!--success rate-->
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-green">
+              <div class="inner">
+                <h3>{{calcPercent (index $data.data "接收成功") $data.sum}}<sup style="font-size: 20px">%</sup></h3>
+                <p>接收成功率</p>
+              </div>
+              <div class="icon"><i class="ion-pie-graph"></i></div>
+              <a href="/stat/daily" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!--cost-->
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-yellow">
+              <div class="inner">
+                <h3><num>{{$data.cost | printf "%.2f"}}<num>s</h3>
+                <p>平均接收时长</p>
+              </div>
+              <div class="icon"><i class="fa fa-clock-o"></i></div>
+              <a href="/stat/cost" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!--fail-->
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-red">
+              <div class="inner">
+                <h3><num>{{index $data.data "UNDELIVERD"}}</num></h3>
+                <p>接收失败</p>
+              </div>
+              <div class="icon"><i class="fa fa-ban"></i></div>
+              <a href="/stat/status" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+      </div>
+    </div>
+    <div class="box box-primary">
+        <div class="box-header">
+            <div class="box-title">短信发送统计</div>
+        </div>
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th width="150">状态</th>
+                    <th width="150">数量</th>
+                    <th width="150">比例</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range $k, $v := $data.statusTitle}}
+                <tr>
+                    <td>{{$k}}</td>
+                    <td><num>{{index $data.data $k}}</num></td>
+                    <td>{{calcPercent (index $data.data $k) $data.sum}}%</td>
+                    <td></td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <div class="box-title">发送状态占比</div>
+        </div>
+        <div class="box-body">
+            <div id="stat" style="height:300px;"></div>
+        </div>
+    </div>
+    <h4><small>统计区间 {{$data.start}} ~ {{$data.end}}</small></h4>
+</section>
+
+<script>
+$(function() {
+    $('#stat').highcharts({
+        title: false,
+        tooltip: {
+            pointFormat: '数值: {point.y} <br /> 占比: {point.percentage:.1f}%'
+        },
+        plotOptions: {
+            pie: {
+                dataLabels: {
+                    enable: true,
+                    color: '#000000',
+                    connectorColor: '#ddd',
+                    format: '{point.name}: {point.percentage:.1f}%',
+                }
+            }
+        },
+        credits: {
+            enabled:false
+        },
+        colors: ['#5bc49f', '#32d3eb', '#60acfc', '#feb64d', '#ff7c7c', '#9287e7', '#4e59c0'],
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                        enabled: false
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '状态统计',
+            data: {{$data.pieData}}
+        }]
+    });
+});
+</script>
+
+{{template "footer" .}}

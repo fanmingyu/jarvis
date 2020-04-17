@@ -1,0 +1,27 @@
+{
+    "LogPath": "./logs/",
+    "RMysql": {
+        "Addr":  "xxxx.com:3307",
+        "DBName": "xxxx_sms",
+        "User": "xxxx_pro",
+        "Passwd": "xxxx"
+    },
+    "WMysql": {
+        "Addr":  "xxxx.com:3307",
+        "DBName": "xxxx_sms",
+        "User": "xxxx_pro",
+        "Passwd": "xxxx"
+    },
+    "EtcdConf": {
+        "Endpoints": [
+            "http://172.21.12.184:2379",
+            "http://172.21.12.185:2379",
+            "http://172.21.12.186:2379"
+        ],
+        "Username": "cronsun",
+        "Password": "8ca7f0ad58",
+        "Prefix": "/service/smsgate-server/",
+        "Timeout": 5
+    },
+    "Port": "10001"
+}

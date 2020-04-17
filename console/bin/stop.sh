@@ -1,0 +1,1 @@
+killall smsgate-console

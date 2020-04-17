@@ -1,0 +1,45 @@
+{{template "header" .}}
+{{$data := .Info}}
+<section class="content-header"><h1>失败状态统计</h1></section>
+<section class="content">
+    <div class="searchbar clearfix">
+        <form action="/stat/status" class="form-inline pull-right">
+            <div class="form-group">
+                <input type="text" class="form-control datepicker" name="start" value="{{$data.start}}"/>
+                -
+                <input type="text" class="form-control datepicker" name="end" value="{{$data.end}}"/>
+                <button type="submit" class="btn btn-default">查询</button>
+            </div>
+        </form>
+    </div>
+    <div class="box box-primary">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th width="100">状态码</th>
+                    <th width="100">运营商</th>
+                    <th width="300">说明</th>
+                    <th width="100">条数</th>
+                    <th width="100">占比</th>
+                    <th width="100">累计占比</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range $v := $data.data}}
+                <tr>
+                    <td><a href="/tools/status?status={{$v.Status}}">{{$v.Status}}</a></td>
+                    <td>{{$v.Report.Net | default "-"}}</td>
+                    <td>{{$v.Report.Info | default "-"}}</td>
+                    <td><num>{{$v.Num}}</num></td>
+                    <td>{{calcPercent $v.Num $data.sum}}%</td>
+                    <td>{{calcPercent $v.Sum $data.sum}}%</td>
+                    <td></td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{{template "footer" .}}

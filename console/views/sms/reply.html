@@ -1,0 +1,67 @@
+{{template "header" .}}
+{{$data := .Info}}
+<section class="content-header"><h1>短信回复记录</h1></section>
+<section class="content">
+    <div class="searchbar clearfix">
+        <form action="/sms/reply" class="form-inline pull-right">
+            <div class="form-group">
+                <a class="btn btn-default" href="#" onclick="location.reload();return false;"><span class="fa fa-fw fa-refresh"></span></a>
+                <input type="text" class="form-control datepicker" name="start" value="{{$data.start}}"/>
+                -
+                <input type="text" class="form-control datepicker" name="end" value="{{$data.end}}"/>
+                <input type="text" class="form-control" placeholder="手机号" name="mobile" value="{{$data.mobile}}"/>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </div>
+        </form>
+    </div>
+    <div class="box box-primary" style="overflow:auto;">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th width="150">MsgID</th>
+                        <th width="150">SpCode</th>
+                        <th width="140">接收时间</th>
+                        <th width="140">到达时间</th>
+                        <th width="100">手机号</th>
+                        <th>短信内容</th>
+                        <th width="100">账号</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range $reply := $data.data}}
+                    <tr>
+                    <td>{{$reply.Msgid}}</td>
+                    <td>{{$reply.SpCode}}</td>
+                    <td>{{$reply.RecvTime | formatTime | default "-"}}</td>
+                    <td>{{$reply.CreateTime | formatTime}}</td>
+                    <td><a href="/sms/index?mobile={{$reply.Mobile}}">{{$reply.Mobile}}</a></td>
+                    <td>{{$reply.Content}}</td>
+                    <td>{{$reply.Account}}</td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+       <div class="box-footer">
+            <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                <ul class="pagination">
+                    {{if $data.page}}
+                    <li class="paginate_button">
+                        <a href="/sms/reply?page={{$data.previous}}&mobile={{$data.mobile}}&start={{$data.start}}&end={{$data.end}}">上一页</a>
+                    </li>
+                    {{else}}
+                    <li class="disabled">
+                        <a href="#">上一页</a>
+                    </li>
+                    {{end}}
+                    <li class="paginate_button">
+                        <a href="/sms/reply?page={{$data.next}}&mobile={{$data.mobile}}&start={{$data.start}}&end={{$data.end}}">下一页</a>
+                    </li>
+                    <li class="disabled">
+                        <a>第{{$data.page}}页，每页{{$data.pageSize}}条</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{{template "footer" .}}

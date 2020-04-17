@@ -1,0 +1,47 @@
+{{template "header" .}}
+{{$data := .Info}}
+{{$app := $data.data}}
+<section class="content-header"><h1>应用配置</h1></section>
+<section class="content">
+    <div class="box box-warning">
+        <form role="form" id="form" action="/app/edit" method="post">
+        <div class="box-body">
+                <input type="hidden" name="id" {{if $app.Id}}value="{{$app.Id}}"{{else}}value=""{{end}} />
+                <div class="form-group">
+                    <label>名称</label>
+                    <input type="text" name="name" class="form-control"{{if $app.Name}} value="{{$app.Name}}"{{end}} placeholder="名称"/>
+                </div>
+                <div class="form-group">
+                    <label>秘钥</label>
+                    <input type="text" name="secret" class="form-control" {{if $app.Secret}}value="{{$app.Secret}}"{{end}} placeholder="秘钥"/>
+                </div>
+                <div class="form-group">
+                    <label>签名</label>
+                    <input type="text" name="prefix" class="form-control" {{if $app.Prefix}}value="{{$app.Prefix}}"{{end}} placeholder="签名"/>
+                </div>
+                <div class="form-group">
+                    <label>通道</label>
+                    <select class="form-control" name="channel">
+                        {{range $chan := $data.channels}}
+                        <option value={{$chan}} {{if $app.Channel}}{{if eq $chan $app.Channel}} selected {{end}}{{end}}>{{getChannelName $chan}}</option>
+                        {{end}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>worker</label>
+                    <select name="worker" class="form-control">
+                        {{range $worker := $data.workers}}
+                        <option value={{$worker}} {{if $app.Worker}}{{if eq $worker $app.Worker}} selected {{end}}{{end}}>{{getWorkerName $worker}}</option>
+                        {{end}}
+                    </select>
+                </div>
+        </div>
+        <div class="box-footer">
+            <div class="form-group-btn">
+                <p class="text-right"><button type="submit" class="btn btn-primary">发送</button></p>
+            </div>
+        </div>
+        </form>
+    </div>
+</section>
+{{template "footer" .}}

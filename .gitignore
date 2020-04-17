@@ -1,0 +1,11 @@
+.idea
+smsgate-console
+smsgate-server
+smsgate-report
+*.gz
+*.out
+console/bin/logs/
+report/bin/logs/
+server/bin/logs/
+go.mod
+go.sum

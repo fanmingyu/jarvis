@@ -1,0 +1,51 @@
+{{define "footer"}}
+    <script>
+    $('input[class="form-control datepicker"]').daterangepicker({
+        locale: {
+            format: 'YYYY-MM-DD HH:mm',
+            daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+            monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        },
+        timePicker: true,
+        timePicker24Hour: true,
+        singleDatePicker: true,
+    });
+    </script>
+  </div>
+  <footer class="main-footer">
+      <div class="container text-center">
+          {{.Now}} &nbsp;&nbsp; {{.Cost}}
+      </div>
+  </footer>
+</div>
+
+
+<!-- Bootstrap 3.3.7 -->
+<script src="/static/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="/static/js/jquery.dataTables.min.js"></script>
+<script src="/static/js/dataTables.bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="/static/js/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="/static/js/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/static/js/demo.js"></script>
+<!-- page script -->
+<script>
+$(function() {
+    $('num, .num').each(function() {
+        var text = $(this).text();
+        if (isNaN(text)) {
+            return;
+        }
+
+        $(this).text(text.replace(/(^|\s)\d+/g, (m) => m.replace(/(?=(?!\b)(\d{3})+$)/g, ',')));
+    });
+});
+</script>
+</body>
+</html>
+{{end}}

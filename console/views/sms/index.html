@@ -1,0 +1,80 @@
+{{template "header" .}}
+{{$data := .Info}}
+<style>
+.status_DELIVRD { color:#00a65a; }
+.status___COMMIT { color:#f39c12; }
+.status___BLACK { color:#dd4b39; }
+.status___FAIL { color:#dd4b39; }
+</style>
+<section class="content-header"><h1>短信发送记录</h1></section>
+<section class="content">
+    <div class="searchbar clearfix">
+        <form action="/sms/index" class="form-inline pull-right">
+            <div class="form-group">
+                <a class="btn btn-default" href="#" onclick="location.reload();return false;"><span class="fa fa-fw fa-refresh"></span></a>
+                <input type="text" class="form-control datepicker" name="start" value="{{$data.start}}"/>
+                -
+                <input type="text" class="form-control datepicker" name="end" value="{{$data.end}}"/>
+                <input type="text" class="form-control" placeholder="手机号" name="mobile" value="{{$data.mobile}}"/>
+                <input type="text" class="form-control" placeholder="状态码" name="status" value="{{$data.status}}"/>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </div>
+        </form>
+    </div>
+    <div class="box box-primary" style="overflow:auto;">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th width="150">MsgID</th>
+                        <th width="60">应用</th>
+                        <th width="100">通道</th>
+                        <th width="140">创建/提交</th>
+                        <th width="140">回执/回执接收</th>
+                        <th width="100">手机号</th>
+                        <th>短信内容</th>
+                        <th width="50">模板</th>
+                        <th width="100">回执状态</th>
+                        <th width="50">条数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range $sms := $data.data}}
+                    <tr>
+                        <td>{{$sms.msgid}}</td>
+                        <td>{{$sms.app}}</td>
+                        <td>{{$sms.channel}}</td>
+                        <td>{{$sms.createTime | formatTime}}<br />{{$sms.requestTime | formatTime | default "-"}}</td>
+                        <td>{{$sms.reportTime | formatTime | default "-"}}<br />{{$sms.reportRecvTime | formatTime | default "-"}}</td>
+                        <td>{{$sms.mobile}}</td>
+                        <td>{{$sms.content}}</td>
+                        <td><a href="/tpl/index?id={{$sms.tplId}}">{{$sms.tplId}}</a></td>
+                        <td><a href="/tools/status?status={{$sms.reportStatus}}"><span class="status_{{$sms.reportStatus}}">{{$sms.reportStatus}}</span></a></td>
+                        <td>{{$sms.count}}</td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+            <div class="box-footer">
+                <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                <ul class="pagination">
+                    {{if $data.page}}
+                    <li class="paginate_button">
+                        <a href="/sms/index?page={{$data.previous}}&mobile={{$data.mobile}}&start={{$data.start}}&end={{$data.end}}&status={{$data.status}}">上一页</a>
+                    </li>
+                    {{else}}
+                    <li class="disabled">
+                        <a href="#">上一页</a>
+                    </li>
+                    {{end}}
+                    <li class="paginate_button">
+                        <a href="/sms/index?page={{$data.next}}&mobile={{$data.mobile}}&start={{$data.start}}&end={{$data.end}}&status={{$data.status}}">下一页</a>
+                    </li>
+                    <li class="disabled">
+                        <a>第{{$data.page}}页，每页{{$data.pageSize}}条</a>
+                    </li>
+                </ul>
+            </div>
+            </div>
+    </div>
+</section>
+{{template "footer" .}}

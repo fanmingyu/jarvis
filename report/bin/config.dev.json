@@ -1,0 +1,12 @@
+{
+    "LogPath": "./logs/",
+    "Mysql": {
+        "Addr":  "10.20.69.57:3306",
+        "DBName": "sms",
+        "User": "sms",
+        "Passwd": "sms"
+    },
+    "RedisSentinelMasterName": "def_master",
+    "RedisSentinelHosts": ["127.0.0.1:26479", "127.0.0.1:26579", "127.0.0.1:26679"],
+    "Port": "10002"
+}

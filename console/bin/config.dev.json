@@ -1,0 +1,27 @@
+{
+    "LogPath": "./logs/",
+    "RMysql": {
+        "Addr":  "xxxxx",
+        "DBName": "xxxxxx",
+        "User": "root",
+        "Passwd": "xxx"
+    },
+    "WMysql": {
+        "Addr":  "xxxx",
+        "DBName": "xxx",
+        "User": "root",
+        "Passwd": "xxxsss"
+    },
+    "Port": "10001",
+    "EtcdConf": {
+        "Endpoints": [
+            "http://127.0.0.1:2379",
+            "http://127.0.0.1:32379",
+            "http://127.0.0.1:22379"
+        ],
+        "Username": "root",
+        "Password": "xxxxx",
+        "Prefix": "/xxxx/service/smsgate-server/",
+        "Timeout": 5
+    }
+}

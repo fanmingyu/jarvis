@@ -1,0 +1,31 @@
+{{template "header" .}}
+{{$data := .Info}}
+<section class="content-header">
+    <h1>短信发送队列统计</h1>
+</section>
+
+<section class="content">
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <div class="box-title">短信队列使用情况</div>
+    </div>
+    {{range $k, $v := $data.queue}}
+    <div class="box-body" style="width:30%; display:inline-block;">
+    <p class="text-center">
+        <strong>{{$k}}</strong>
+    </p>
+    {{range $n, $l := $v}}
+    <div class="progress-group">
+        <span class="progress-text">{{$n}}</span>
+        <span class="progress-number"><b>{{$l.Len}}</b>/{{$l.BufferLen}}</span>
+        <div class="progress sm">
+            <div class="progress-bar progress-bar-aqua" style="width: {{calcPercent $l.Len $l.BufferLen}}%"></div>
+        </div>
+    </div>
+    {{end}}
+    </div>
+    {{end}}
+</div>
+</section>
+
+{{template "footer" .}}

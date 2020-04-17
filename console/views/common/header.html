@@ -1,0 +1,105 @@
+{{define "header"}}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>JuRenSMSGate | 短信网关控制台</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="/static/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="/static/css/dataTables.bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/css/AdminLTE.min.css">
+
+  <link rel="stylesheet" href="/static/css/skins/_all-skins.min.css">
+  <!-- Datepicker -->
+  <link rel="stylesheet" href="/static/daterangepicker/daterangepicker.css">
+
+  <!-- Google Font -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- jQuery 3 -->
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/jquery.form.js"></script>
+  <!-- Datepicker -->
+  <script src="/static/daterangepicker/moment.min.js"></script>
+  <script src="/static/daterangepicker/daterangepicker.js"></script>
+  <!-- Highcharts -->
+  <script src="/static/js/highcharts.js"></script>
+  <style>
+  .searchbar { margin-bottom:5px; }
+  </style>
+</head>
+<body class="hold-transition skin-purple sidebar-mini">
+<div class="wrapper">
+<header class="main-header">
+    <a href="/" class="logo">
+        <span class="logo-mini"><b>SMS</b></span>
+        <span class="logo-lg">
+            <b>巨人短信网关</b> <small>v1.0</small>
+        </span>
+    </a>
+    <nav class="navbar navbar-static-top">
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <li class="dropdown messages-menu">
+                    <a href="#"> <span id="username">{{.Username}}</span> </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">短信管理</li>
+            <li><a href="/app/index"><i class="fa fa-circle-o text-yellow"></i> <span>应用管理</span></a></li>
+            <li><a href="/tpl/index"><i class="fa fa-circle-o text-aqua"></i> <span>模板管理</span></a></li>
+            <li><a href="/blacklist/index"><i class="fa fa-circle-o text-purple"></i> <span>黑名单管理</span></a></li>
+
+            <li class="header">短信发送</li>
+            <li><a href="/sms/index"><i class="fa fa-circle-o text-red"></i> <span>短信发送记录</span></a></li>
+            <li><a href="/sms/reply"><i class="fa fa-circle-o text-red"></i> <span>短信回复记录</span></a></li>
+            <li><a href="/send/index"><i class="fa fa-circle-o text-green"></i> <span>单条发送</span></a></li>
+
+            <li class="header">短信统计</li>
+            <li><a href="/stat/channel"><i class="fa fa-bar-chart"></i> <span>通道发送统计</span></a></li>
+            <li><a href="/stat/daily"><i class="fa fa-bar-chart"></i> <span>每日发送统计</span></a></li>
+            <li><a href="/stat/cost"><i class="fa fa-bar-chart"></i> <span>接收时长统计</span></a></li>
+            <li><a href="/stat/app"><i class="fa fa-bar-chart"></i> <span>应用发送统计</span></a></li>
+            <li><a href="/stat/status"><i class="fa fa-bar-chart"></i> <span>失败状态统计</span></a></li>
+            <li><a href="/stat/number"><i class="fa fa-bar-chart"></i> <span>发送条数统计</span></a></li>
+            <li><a href="/stat/tpl"><i class="fa fa-bar-chart"></i> <span>模板发送统计</span></a></li>
+            <li><a href="/stat/mobile"><i class="fa fa-bar-chart"></i> <span>号码发送排行</span></a></li>
+
+            <li class="header">其他</li>
+            <li><a href="/tools/status"><i class="fa fa-circle-o text-blue"></i> <span>状态码查询</span></a></li>
+            <li><a href="/tools/queue"><i class="fa fa-circle-o text-blue"></i> <span>队列使用情况</span></a></li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+<script>
+path = window.location.pathname;
+$('.sidebar-menu li').each(function() {
+    if ($(this).find('a').attr('href') === path) {
+        $(this).addClass('active');
+    }
+});
+</script>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+{{end}}

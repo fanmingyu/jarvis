@@ -1,0 +1,12 @@
+{
+    "LogPath": "./logs/",
+    "Mysql": {
+        "Addr":  "xxx:3307",
+        "DBName": "xxxx",
+        "User": "xxxx",
+        "Passwd": "xxx"
+    },
+    "RedisSentinelMasterName": "mymaster",
+    "RedisSentinelHosts": ["st-redis1.wxlc.org:26479", "st-redis2.wxlc.org:26479", "st-redis3.wxlc.org:26479"],
+    "Port": "10002"
+}

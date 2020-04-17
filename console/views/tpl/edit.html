@@ -1,0 +1,35 @@
+{{template "header" .}}
+{{$tpl := .Info}}
+<section class="content-header"><h1>模板配置</h1></section>
+<section class="content">
+    <div class="box box-warning">
+        <form role="form" id="form" action="/tpl/edit" method="post">
+            <input type="hidden" name="id" {{if $tpl.Id}}value="{{$tpl.Id}}"{{else}}value=""{{end}} />
+            <div class="box-body">
+                    <div class="form-group">
+                        <label>名称</label>
+                        <input type="text" name="name" class="form-control" {{if $tpl.Name}}value="{{$tpl.Name}}"{{end}} placeholder="名称"/>
+                    </div>
+            </div>
+            <div class="box-body">
+                    <div class="form-group">
+                        <label>外部模板ID</label>
+                        <input type="text" name="out_id" class="form-control" {{if $tpl.OutId}}value="{{$tpl.OutId}}"{{end}} placeholder="外部模板ID"/>
+                    </div>
+            </div>
+            <div class="box-body">
+                    <div class="form-group">
+                        <label>内容</label>
+                        <!-- 需要显示json数据，去掉value中的双引号 -->
+                        <input type="text" class="form-control"  name="content"{{if $tpl.Content}}value={{$tpl.Content}}{{end}} placeholder="内容">
+                    </div>
+            </div>
+            <div class="box-footer">
+                <div class="form-group-btn">
+                    <p class="text-right"><button type="submit" class="btn btn-primary">保存</button></p>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+{{template "footer" .}}

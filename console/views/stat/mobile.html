@@ -1,0 +1,52 @@
+{{template "header" .}}
+{{$data := .Info}}
+<section class="content-header"><h1>号码发送排行</h1></section>
+<section class="content">
+    <div class="searchbar clearfix">
+        <form action="/stat/mobile" class="form-inline pull-right">
+            <div class="form-group">
+                <select class="form-control" name="limit">
+                    <option value="50" {{if eq $data.limit 50}}selected{{end}}>显示50条</option>
+                    <option value="100" {{if eq $data.limit 100}}selected{{end}}>显示100条</option>
+                    <option value="200" {{if eq $data.limit 200}}selected{{end}}>显示200条</option>
+                    <option value="300" {{if eq $data.limit 300}}selected{{end}}>显示300条</option>
+                </select>
+                <input type="text" class="form-control datepicker" name="start" value="{{$data.start}}"/>
+                -
+                <input type="text" class="form-control datepicker" name="end" value="{{$data.end}}"/>
+                <button type="submit" class="btn btn-default">查询</button>
+            </div>
+        </form>
+    </div>
+    <div class="box box-primary">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th width="70">排名</th>
+                    <th width="200">手机号</th>
+                    <th width="100">发送次数</th>
+                    <th width="100">发送条数</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range $k, $v := $data.data}}
+                <tr>
+                    <td><span class="add">{{$k}}</span></td>
+                    <td><a href="/sms/index?mobile={{$v.Mobile}}">{{$v.Mobile}}</a></td>
+                    <td>{{$v.Total}}</td>
+                    <td>{{$v.Num}}</td>
+                    <td></td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+</section>
+<script>
+$('.add').each(function() {
+    $(this).html(parseInt($(this).html()) + 1);
+});
+</script>
+
+{{template "footer" .}}

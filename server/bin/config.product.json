@@ -1,0 +1,23 @@
+{
+    "LogPath": "./logs/",
+    "RedisSentinelMasterName": "mymaster",
+    "RedisSentinelHosts": ["st-redis1.xxx.org:26479", "st-redis2.xxx.org:26479", "st-redis3.xxxx.org:26479"],
+    "Mysql": {
+        "Addr":  "xxxx.mysql.xxx.com:3307",
+        "DBName": "xxxx",
+        "User": "ssssss",
+        "Passwd": "xxxx"
+    },
+    "EtcdConf": {
+        "Endpoints": [
+            "http://172.21.12.184:2379",
+            "http://172.21.12.185:2379",
+            "http://172.21.12.186:2379"
+        ],
+        "Username": "root",
+        "Password": "xxxx",
+        "Prefix": "/xxxxx/service/smsgate-server/",
+        "Timeout": 5
+    },
+    "Port": "10000"
+}

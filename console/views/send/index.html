@@ -1,0 +1,51 @@
+{{template "header" .}}
+{{$data := .Info}}
+<section class="content-header"><h1>短信单条发送</h1></section>
+<section class="content">
+    <div class="box box-warning">
+        <form role="form" id="form" action="/send/send" method="post">
+        <div class="box-body">
+                <div class="form-group">
+                    <label>应用</label>
+                    <select class="form-control" name="app">
+                        {{range $app := $data.data}}
+                        <option value="{{$app.Name}}">{{$app.Name}}</option>
+                        {{end}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>手机号</label>
+                    <input type="text" name="mobile" class="form-control" placeholder="手机号"/>
+                </div>
+                <div class="form-group">
+                    <label>短信内容</label>
+                    <textarea class="form-control" name="content" id="content" maxlength="300" onkeydown="textCounter();" onkeyup="textCounter();"></textarea>
+                    <p class="text-left">共<b id="counter" style="color:#F00">0</b>/300字，计<b id="smscount" style="color:#F00">0</b>条短信</p>
+                </div>
+        </div>
+        <div class="box-footer">
+            <div class="form-group-btn">
+                <p class="text-right"><button type="button" onclick="submitForm();" class="btn btn-primary">发送</button></p>
+            </div>
+        </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        function textCounter() {
+            var length = $('#content').val().length;
+            $('#counter').html(length);
+            var smscount = length <= 70?1:Math.ceil(length/67);
+            $('#smscount').html(smscount);
+        }
+
+        function submitForm() {
+            $('#form').ajaxSubmit(function(message) {
+                if (message.code == 0) {
+                    location.reload();
+                }
+                alert(message.message);
+            });
+        }
+    </script>
+<section>
+{{template "footer" .}}
